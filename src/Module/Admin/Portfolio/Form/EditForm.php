@@ -94,7 +94,8 @@ class EditForm implements FieldDefinitionInterface
             function (Form $form) {
                 $form->add('category_id', CategoryListField::class)
                     ->label($this->trans('portfolio.field.category'))
-                    ->categoryType('portfolio');
+                    ->categoryType('portfolio')
+                    ->option($this->trans('unicorn.select.placeholder'));
 
                 $form->add('state', SwitcherField::class)
                     ->label($this->trans('unicorn.field.published'))
