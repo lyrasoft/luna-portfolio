@@ -2,8 +2,14 @@
 
 ## Installation
 
+Install from composer
+
 ```shell
 composer require lyrasoft/portfolio
+```
 
-php windwalker pkg:install
+Then copy files to project
+
+```shell
+php windwalker pkg:install lyrasoft/portfolio -t routes -t lang -t migrations -t seeders
 ```
