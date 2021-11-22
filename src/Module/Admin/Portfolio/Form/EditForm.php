@@ -18,6 +18,7 @@ use Unicorn\Field\MultiUploaderField;
 use Unicorn\Field\SingleImageDragField;
 use Unicorn\Field\SwitcherField;
 use Unicorn\Field\TinymceEditorField;
+use Windwalker\Core\Language\TranslatorTrait;
 use Windwalker\Form\Field\HiddenField;
 use Windwalker\Form\Field\NumberField;
 use Windwalker\Form\Field\TextareaField;
@@ -31,6 +32,8 @@ use Windwalker\Form\Form;
  */
 class EditForm implements FieldDefinitionInterface
 {
+    use TranslatorTrait;
+
     /**
      * Define the form fields.
      *
@@ -41,28 +44,28 @@ class EditForm implements FieldDefinitionInterface
     public function define(Form $form): void
     {
         $form->add('title', TextField::class)
-            ->label('標題')
+            ->label($this->trans('unicorn.field.title'))
             ->addFilter('trim')
             ->required(true);
 
         $form->add('alias', TextField::class)
-            ->label('網址別名')
+            ->label($this->trans('unicorn.field.alias'))
             ->addFilter('trim');
 
         $form->fieldset(
             'basic',
             function (Form $form) {
                 $form->add('subtitle', TextField::class)
-                    ->label('副標題');
+                    ->label($this->trans('portfolio.field.subtitle'));
 
                 $form->add('url', TextField::class)
-                    ->label('網址');
+                    ->label($this->trans('portfolio.field.url'));
 
                 $form->add('cover', SingleImageDragField::class)
-                    ->label('封面圖');
+                    ->label($this->trans('portfolio.field.cover'));
 
                 $form->add('images', MultiUploaderField::class)
-                    ->label('Images')
+                    ->label($this->trans('portfolio.field.images'))
                     ->accept(
                         implode(',', [
                             'image/png',
@@ -76,11 +79,11 @@ class EditForm implements FieldDefinitionInterface
                     ->configureForm(
                         function (Form $form) {
                             $form->add('title', TextField::class)
-                                ->label('標題');
+                                ->label($this->trans('unicorn.field.title'));
                             $form->add('description', TextareaField::class)
-                                ->label('說明');
+                                ->label($this->trans('unicorn.field.description'));
                             $form->add('link', UrlField::class)
-                                ->label('連結');
+                                ->label($this->trans('portfolio.field.link'));
                         }
                     );
             }
@@ -90,29 +93,29 @@ class EditForm implements FieldDefinitionInterface
             'meta',
             function (Form $form) {
                 $form->add('category_id', CategoryListField::class)
-                    ->label('Category ID')
+                    ->label($this->trans('portfolio.field.category'))
                     ->categoryType('portfolio');
 
                 $form->add('state', SwitcherField::class)
-                    ->label('Published')
+                    ->label($this->trans('unicorn.field.published'))
                     ->circle(true)
                     ->color('success')
                     ->defaultValue('1');
 
                 $form->add('created', CalendarField::class)
-                    ->label('建立時間')
+                    ->label($this->trans('unicorn.field.created'))
                     ->disabled(true);
 
                 $form->add('modified', CalendarField::class)
-                    ->label('編輯時間')
+                    ->label($this->trans('unicorn.field.modified'))
                     ->disabled(true);
 
                 $form->add('created_by', UserModalField::class)
-                    ->label('建立者')
+                    ->label($this->trans('unicorn.field.created.by'))
                     ->disabled(true);
 
                 $form->add('modified_by', UserModalField::class)
-                    ->label('編輯者')
+                    ->label($this->trans('unicorn.field.modified.by'))
                     ->disabled(true);
             }
         );
@@ -121,7 +124,7 @@ class EditForm implements FieldDefinitionInterface
             'content',
             function (Form $form) {
                 $form->add('description', TinymceEditorField::class)
-                    ->label('Description')
+                    ->label($this->trans('unicorn.field.description'))
                     ->editorOptions(
                         [
                             'height' => 500,
@@ -134,14 +137,14 @@ class EditForm implements FieldDefinitionInterface
             'seo',
             function (Form $form) {
                 $form->add('meta/title', TextField::class)
-                    ->label('SEO 標題');
+                    ->label($this->trans('portfolio.field.seo.title'));
 
                 $form->add('meta/description', TextareaField::class)
-                    ->label('SEO 描述')
+                    ->label($this->trans('portfolio.field.seo.description'))
                     ->rows(7);
 
                 $form->add('meta/keyword', TextField::class)
-                    ->label('SEO 關鍵字');
+                    ->label($this->trans('portfolio.field.seo.keyword'));
             }
         );
 

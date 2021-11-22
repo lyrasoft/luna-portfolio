@@ -52,6 +52,12 @@ use Windwalker\Form\Form;
                     is="card"
                 >
                 </x-fieldset>
+                <x-fieldset name="content" :title="$lang('unicorn.fieldset.text')"
+                    :form="$form"
+                    class="mb-4"
+                    is="card"
+                >
+                </x-fieldset>
             </div>
             <div class="col-md-5">
                 <x-fieldset name="meta" :title="$lang('unicorn.fieldset.meta')"

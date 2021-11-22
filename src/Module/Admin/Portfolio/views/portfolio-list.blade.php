@@ -64,7 +64,7 @@ $imagePlaceholder = $app->service(\Unicorn\Image\ImagePlaceholder::class);
                         </x-sort>
                     </th>
                     <th class="text-nowrap" style="width: 1%;">
-                        圖片
+                        @lang('portfolio.field.cover')
                     </th>
                     <th class="text-nowrap">
                         <x-sort field="portfolio.title">
@@ -73,7 +73,7 @@ $imagePlaceholder = $app->service(\Unicorn\Image\ImagePlaceholder::class);
                     </th>
                     <th class="text-nowrap" style="width: 15%;">
                         <x-sort field="category.title">
-                            分類
+                            @lang('portfolio.field.category')
                         </x-sort>
                     </th>
                     <th style="width: 10%" class="text-nowrap">
