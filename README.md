@@ -1,5 +1,7 @@
 # LYRASOFT Portfolio Package
 
+![p-001-2021-11-23-03-08-34](https://user-images.githubusercontent.com/1639206/142921320-b0f9f2b5-9460-4b95-8fd0-df9762a13b82.jpg)
+
 ## Installation
 
 Install from composer
