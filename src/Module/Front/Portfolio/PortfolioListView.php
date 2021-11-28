@@ -53,7 +53,7 @@ class PortfolioListView implements ViewModelInterface
     public function prepare(AppContext $app, View $view): array
     {
         $path = $app->input('path');
-        $category = $this->getCategoryOrFail('portfolio', $path);
+        $category = $this->getCategoryOrFail(['type' => 'portfolio', 'path' => $path]);
 
         $limit = 10;
         $page = $app->input('page');
