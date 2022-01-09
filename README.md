@@ -21,6 +21,16 @@ Seeders
 - Add `portfolio-seeder.php` to `resources/seeders/main.php`
 - Add `portfolio` type to `category-seeder.php`
 
+Languages
+
+If you don't want to copy language files, remove `-t lang` from install command.
+
+Then add this line to admin & front middleware:
+
+```php
+$this->lang->loadAllFromVendor('lyrasoft/portfolio', 'ini');
+```
+
 ## Register Admin Menu
 
 Edit `resources/menu/admin/sidemenu.menu.php`
