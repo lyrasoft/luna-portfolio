@@ -42,8 +42,9 @@ class PortfolioController
                 $data = $event->getData();
 
                 $data['cover'] = $fileUploadService->handleFileIfUploaded(
-                        $app->file('item')['cover'] ?? null
-                    )?->getUri() ?? $data['cover'];
+                    $app->file('item')['cover'] ?? null,
+                    'images/portfolio/cover-' . md5((string) $data['id']) . '.{ext}'
+                )?->getUri(true) ?? $data['cover'];
 
                 $repository->save($data);
             }
