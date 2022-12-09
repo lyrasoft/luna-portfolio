@@ -32,7 +32,7 @@ class PortfolioPackage extends AbstractPackage
             [
                 static::path("src/Module/Admin/Portfolio/**/*") => "@source/Module/Admin/Portfolio",
             ],
-            ['Lyrasoft\\Luna\\Module\\Admin' => 'App\\Module\\Admin'],
+            ['Lyrasoft\\Portfolio\\Module\\Admin' => 'App\\Module\\Admin'],
             ['modules', 'portfolio_admin'],
         );
 
@@ -40,7 +40,7 @@ class PortfolioPackage extends AbstractPackage
             [
                 static::path("src/Module/Front/Portfolio/**/*") => "@source/Module/Front/Portfolio",
             ],
-            ['Lyrasoft\\Luna\\Module\\Front' => 'App\\Module\\Front'],
+            ['Lyrasoft\\Portfolio\\Module\\Front' => 'App\\Module\\Front'],
             ['modules', 'portfolio_front'],
         );
 
@@ -50,8 +50,8 @@ class PortfolioPackage extends AbstractPackage
                 static::path("src/Repository/PortfolioRepository.php") => '@source/Repository',
             ],
             [
-                'Lyrasoft\\Luna\\Entity' => 'App\\Entity',
-                'Lyrasoft\\Luna\\Repository' => 'App\\Repository',
+                'Lyrasoft\\Portfolio\\Entity' => 'App\\Entity',
+                'Lyrasoft\\Portfolio\\Repository' => 'App\\Repository',
             ],
             ['modules', 'portfolio_model']
         );
