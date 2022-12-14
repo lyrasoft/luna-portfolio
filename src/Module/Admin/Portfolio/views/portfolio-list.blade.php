@@ -71,11 +71,6 @@ $imagePlaceholder = $app->service(\Unicorn\Image\ImagePlaceholder::class);
                             @lang('unicorn.field.title')
                         </x-sort>
                     </th>
-                    <th class="text-nowrap" style="width: 15%;">
-                        <x-sort field="category.title">
-                            @lang('portfolio.field.category')
-                        </x-sort>
-                    </th>
                     <th style="width: 10%" class="text-nowrap">
                         <div class="d-flex w-100 justify-content-end">
                             <x-sort
@@ -128,9 +123,6 @@ $imagePlaceholder = $app->service(\Unicorn\Image\ImagePlaceholder::class);
                                     {{ $item->title }}
                                 </a>
                             </div>
-                        </td>
-                        <td>
-                            {{ $item->category->title }}
                         </td>
                         <td class="text-end text-right">
                             <x-order-control
