@@ -59,7 +59,6 @@ $seeder->import(
                 ->dump()
             );
             $item->setUrl($faker->url());
-            $item->setYear($faker->year());
             $item->setState(1);
             $item->setOrdering($i);
             $item->setCreatedBy((int) $faker->randomElement($userIds));

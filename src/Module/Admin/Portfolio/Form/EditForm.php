@@ -61,9 +61,6 @@ class EditForm implements FieldDefinitionInterface
                 $form->add('url', TextField::class)
                     ->label($this->trans('portfolio.field.url'));
 
-                $form->add('year', TextField::class)
-                    ->label($this->trans('portfolio.field.year'));
-
                 $form->add('cover', SingleImageDragField::class)
                     ->label($this->trans('portfolio.field.cover'));
 

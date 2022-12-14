@@ -67,9 +67,6 @@ class Portfolio implements EntityInterface
     #[Column('url')]
     protected string $url = '';
 
-    #[Column('year')]
-    protected string $year = '';
-
     #[Column('meta')]
     #[Cast(JsonCast::class)]
     protected array $meta = [];
@@ -214,18 +211,6 @@ class Portfolio implements EntityInterface
     public function setUrl(string $url): static
     {
         $this->url = $url;
-
-        return $this;
-    }
-
-    public function getYear(): string
-    {
-        return $this->year;
-    }
-
-    public function setYear(string $year): static
-    {
-        $this->year = $year;
 
         return $this;
     }

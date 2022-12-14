@@ -36,7 +36,6 @@ $mig->up(
                 $schema->varchar('cover');
                 $schema->json('images');
                 $schema->varchar('url');
-                $schema->varchar('year');
                 $schema->json('meta');
                 $schema->bool('state');
                 $schema->integer('ordering');
