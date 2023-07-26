@@ -34,6 +34,7 @@ use Windwalker\ORM\Metadata\EntityMetadata;
  * The Portfolio class.
  */
 #[Table('portfolios', 'portfolio')]
+#[\AllowDynamicProperties]
 class Portfolio implements EntityInterface
 {
     use EntityTrait;
