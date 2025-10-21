@@ -114,8 +114,7 @@ $imagePlaceholder = $app->service(\Unicorn\Image\ImagePlaceholder::class);
                             />
                         </td>
                         <td>
-                            <img src="{{ $item->cover ?: $imagePlaceholder->placeholderSquare() }}" alt="Preview"
-                                style="max-height: 50px; max-width: 100px">
+                            <img src="{{ $item->cover ?: $imagePlaceholder->placeholderSquare() }}" alt="Preview">
                         </td>
                         <td>
                             <div>

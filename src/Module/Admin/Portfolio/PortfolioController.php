@@ -20,6 +20,7 @@ use Windwalker\Core\Application\AppContext;
 use Windwalker\Core\Attributes\Controller;
 use Windwalker\Core\Router\Navigator;
 use Windwalker\DI\Attributes\Autowire;
+use Windwalker\DI\Attributes\Inject;
 use Windwalker\ORM\Event\AfterSaveEvent;
 
 /**
@@ -33,7 +34,8 @@ class PortfolioController
         CrudController $controller,
         Navigator $nav,
         #[Autowire] PortfolioRepository $repository,
-        FileUploadService $fileUploadService
+        #[Inject(tag: 'image')]
+        FileUploadService $fileUploadService,
     ): mixed {
         $form = $app->make(EditForm::class);
 
@@ -61,6 +63,7 @@ class PortfolioController
 
             case 'save2copy':
                 $controller->rememberForClone($app, $repository);
+
                 return $nav->self($nav::WITHOUT_VARS)->var('new', 1);
 
             default:
