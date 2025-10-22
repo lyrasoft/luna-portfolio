@@ -44,7 +44,7 @@ return new /** Portfolio Seeder */ class extends AbstractSeeder {
                 ])
                 ->dump();
             $item->url = $faker->url();
-            $item->state = 1;
+            $item->state = $faker->optional(0.7, 0)->passthrough(1);
             $item->ordering = $i;
             $item->createdBy = (int) $faker->randomElement($userIds);
             $item->modifiedBy = (int) $faker->randomElement($userIds);
