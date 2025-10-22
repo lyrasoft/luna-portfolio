@@ -28,32 +28,11 @@ class PortfolioPackage extends AbstractPackage
         $installer->installRoutes(static::path('routes/**/*.php'), 'routes');
 
         // Modules
-        $installer->installModules(
-            [
-                static::path("src/Module/Admin/Portfolio/**/*") => "@source/Module/Admin/Portfolio",
-            ],
-            ['Lyrasoft\\Portfolio\\Module\\Admin' => 'App\\Module\\Admin'],
-            ['modules', 'portfolio_admin'],
-        );
-
-        $installer->installModules(
-            [
-                static::path("src/Module/Front/Portfolio/**/*") => "@source/Module/Front/Portfolio",
-            ],
-            ['Lyrasoft\\Portfolio\\Module\\Front' => 'App\\Module\\Front'],
-            ['modules', 'portfolio_front'],
-        );
-
-        $installer->installModules(
-            [
-                static::path("src/Entity/Portfolio.php") => '@source/Entity',
-                static::path("src/Repository/PortfolioRepository.php") => '@source/Repository',
-            ],
-            [
-                'Lyrasoft\\Portfolio\\Entity' => 'App\\Entity',
-                'Lyrasoft\\Portfolio\\Repository' => 'App\\Repository',
-            ],
-            ['modules', 'portfolio_model']
-        );
+        // Admin + Front + Model
+        $installer->installMVCModules(Portfolio::class);
+        // Admin + Front, no model
+        $installer->installMVCModules(Portfolio::class, model: false);
+        // Only Admin + Model
+        $installer->installMVCModules(Portfolio::class, ['Admin'], true);
     }
 }

@@ -35,18 +35,18 @@ use Windwalker\Core\Router\SystemUri;
             <div class="card mb-3">
                 <div class="card-body d-flex">
                     <div class="me-3" style="min-width: 300px; width: 300px">
-                        <img class="img-fluid" src="{{ $item->getCover() }}" alt="Cover">
+                        <img class="img-fluid" src="{{ $item->cover }}" alt="Cover">
                     </div>
                     <div>
                         <h4 class="card-title">
-                            {{ $item->getTitle() }}
+                            {{ $item->title }}
                         </h4>
                         <div>
-                            {!! $item->getDescription() !!}
+                            {!! $item->description !!}
                         </div>
                         <div class="mt-3">
                             <a class="btn btn-primary"
-                                href="{{ $nav->to('portfolio_item')->id($item->getId())->alias($item->getAlias()) }}">
+                                href="{{ $nav->to('portfolio_item')->id($item->id)->alias($item->alias) }}">
                                 觀看更多
                             </a>
                         </div>

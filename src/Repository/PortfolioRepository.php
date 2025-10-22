@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Part of starter project.
- *
- * @copyright    Copyright (C) 2021 __ORGANIZATION__.
- * @license        MIT
- */
-
 declare(strict_types=1);
 
 namespace Lyrasoft\Portfolio\Repository;
@@ -61,7 +54,7 @@ class PortfolioRepository implements ManageRepositoryInterface, ListRepositoryIn
     {
         $action->setReorderGroupHandler(
             function (Query $query, Portfolio $entity) {
-                $query->where('category_id', $entity->getCategoryId());
+                $query->where('category_id', $entity->categoryId);
             }
         );
     }

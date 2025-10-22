@@ -36,19 +36,19 @@ use Windwalker\Core\Router\SystemUri;
 
                 <article>
                     <div class="l-portfolio-item__cover mb-4">
-                        <img class="img-fluid" src="{{ $item->getCover() }}" alt="cover">
+                        <img class="img-fluid" src="{{ $item->cover }}" alt="cover">
                     </div>
 
                     <header class="l-portfolio-item__header">
-                        <h2>{{ $item->getTitle() }}</h2>
+                        <h2>{{ $item->title }}</h2>
                     </header>
 
                     <div class="article-content l-portfolio-item__content">
-                        {!! $item->getDescription() !!}
+                        {!! $item->description !!}
                     </div>
 
                     <div class="row gx-2 mt-4 l-portfolio-item__images">
-                        @foreach ($item->getImages() as $image)
+                        @foreach ($item->images as $image)
                             <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
                                 <img class="img-fluid" src="{{ $image['url'] }}" alt="image">
                             </div>

@@ -1,30 +1,20 @@
 <?php
 
-/**
- * Part of Windwalker project.
- *
- * @copyright  Copyright (C) 2021.
- * @license    __LICENSE__
- */
-
 declare(strict_types=1);
 
 namespace Lyrasoft\Portfolio\Migration;
 
 use Lyrasoft\Portfolio\Entity\Portfolio;
-use Windwalker\Core\Console\ConsoleApplication;
-use Windwalker\Core\Migration\Migration;
+use Windwalker\Core\Migration\AbstractMigration;
+use Windwalker\Core\Migration\MigrateUp;
+use Windwalker\Core\Migration\MigrateDown;
 use Windwalker\Database\Schema\Schema;
 
-/**
- * Migration UP: 2021112209260001_PortfolioInit.
- *
- * @var Migration          $mig
- * @var ConsoleApplication $app
- */
-$mig->up(
-    static function () use ($mig) {
-        $mig->createTable(
+return new /** 2025102108030001_PortfolioInit */ class extends AbstractMigration {
+    #[MigrateUp]
+    public function up(): void
+    {
+        $this->createTable(
             Portfolio::class,
             function (Schema $schema) {
                 $schema->primary('id');
@@ -37,7 +27,7 @@ $mig->up(
                 $schema->json('images');
                 $schema->varchar('url');
                 $schema->json('meta');
-                $schema->bool('state');
+                $schema->tinyint('state')->length(1)->comment('0: unpublished, 1:published');
                 $schema->integer('ordering');
                 $schema->datetime('created');
                 $schema->datetime('modified');
@@ -50,13 +40,10 @@ $mig->up(
             }
         );
     }
-);
 
-/**
- * Migration DOWN.
- */
-$mig->down(
-    static function () use ($mig) {
-        $mig->dropTables(Portfolio::class);
+    #[MigrateDown]
+    public function down(): void
+    {
+        $this->dropTables(Portfolio::class);
     }
-);
+};

@@ -1,38 +1,30 @@
 <?php
 
-/**
- * Part of starter project.
- *
- * @copyright  Copyright (C) 2021 __ORGANIZATION__.
- * @license    MIT
- */
-
 declare(strict_types=1);
 
 namespace Lyrasoft\Portfolio\Entity;
 
-use Lyrasoft\Luna\Attributes\Author;
-use Lyrasoft\Luna\Attributes\Modifier;
-use Lyrasoft\Luna\Attributes\Slugify;
-use Unicorn\Enum\BasicState;
-use Windwalker\Core\DateTime\Chronos;
 use Windwalker\ORM\Attributes\AutoIncrement;
-use Windwalker\ORM\Attributes\Cast;
-use Windwalker\ORM\Attributes\CastNullable;
 use Windwalker\ORM\Attributes\Column;
-use Windwalker\ORM\Attributes\CreatedTime;
-use Windwalker\ORM\Attributes\CurrentTime;
 use Windwalker\ORM\Attributes\EntitySetup;
 use Windwalker\ORM\Attributes\PK;
 use Windwalker\ORM\Attributes\Table;
-use Windwalker\ORM\Cast\JsonCast;
 use Windwalker\ORM\EntityInterface;
 use Windwalker\ORM\EntityTrait;
 use Windwalker\ORM\Metadata\EntityMetadata;
+use Lyrasoft\Luna\Attributes\Slugify;
+use Windwalker\ORM\Attributes\JsonObject;
+use Unicorn\Enum\BasicState;
+use Windwalker\Core\DateTime\Chronos;
+use Windwalker\ORM\Attributes\CastNullable;
+use Windwalker\Core\DateTime\ServerTimeCast;
+use Windwalker\ORM\Attributes\CreatedTime;
+use Windwalker\ORM\Attributes\CurrentTime;
+use Lyrasoft\Luna\Attributes\Author;
+use Lyrasoft\Luna\Attributes\Modifier;
 
-/**
- * The Portfolio class.
- */
+// phpcs:disable
+// todo: remove this when phpcs supports 8.4
 #[Table('portfolios', 'portfolio')]
 #[\AllowDynamicProperties]
 class Portfolio implements EntityInterface
@@ -40,275 +32,75 @@ class Portfolio implements EntityInterface
     use EntityTrait;
 
     #[Column('id'), PK, AutoIncrement]
-    protected ?int $id = null;
+    public ?int $id = null;
 
     #[Column('category_id')]
-    protected int $categoryId = 0;
+    public int $categoryId = 0;
 
     #[Column('title')]
-    protected string $title = '';
+    public string $title = '';
 
     #[Column('alias')]
     #[Slugify]
-    protected string $alias = '';
+    public string $alias = '';
 
     #[Column('subtitle')]
-    protected string $subtitle = '';
+    public string $subtitle = '';
 
     #[Column('description')]
-    protected string $description = '';
+    public string $description = '';
 
     #[Column('cover')]
-    protected string $cover = '';
+    public string $cover = '';
 
     #[Column('images')]
-    #[Cast(JsonCast::class)]
-    protected array $images = [];
+    #[JsonObject]
+    public array $images = [];
 
     #[Column('url')]
-    protected string $url = '';
+    public string $url = '';
 
     #[Column('meta')]
-    #[Cast(JsonCast::class)]
-    protected array $meta = [];
+    #[JsonObject]
+    public array $meta = [];
 
     #[Column('state')]
-    #[Cast('int')]
-    #[Cast(BasicState::class)]
-    protected BasicState $state;
+    public BasicState $state {
+        set(BasicState|int $value) => $this->state = BasicState::wrap($value);
+    }
 
     #[Column('ordering')]
-    protected int $ordering = 0;
+    public int $ordering = 0;
 
     #[Column('created')]
-    #[CastNullable(Chronos::class)]
+    #[CastNullable(ServerTimeCast::class)]
     #[CreatedTime]
-    protected ?Chronos $created = null;
+    public ?Chronos $created = null {
+        set(\DateTimeInterface|string|null $value) => $this->created = Chronos::tryWrap($value);
+    }
 
     #[Column('modified')]
-    #[CastNullable(Chronos::class)]
+    #[CastNullable(ServerTimeCast::class)]
     #[CurrentTime]
-    protected ?Chronos $modified = null;
+    public ?Chronos $modified = null {
+        set(\DateTimeInterface|string|null $value) => $this->modified = Chronos::tryWrap($value);
+    }
 
     #[Column('created_by')]
     #[Author]
-    protected int $createdBy = 0;
+    public int $createdBy = 0;
 
     #[Column('modified_by')]
     #[Modifier]
-    protected int $modifiedBy = 0;
+    public int $modifiedBy = 0;
 
     #[Column('params')]
-    #[Cast(JsonCast::class)]
-    protected array $params = [];
+    #[JsonObject]
+    public array $params = [];
 
     #[EntitySetup]
     public static function setup(EntityMetadata $metadata): void
     {
         //
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function setId(?int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getCategoryId(): int
-    {
-        return $this->categoryId;
-    }
-
-    public function setCategoryId(int $categoryId): static
-    {
-        $this->categoryId = $categoryId;
-
-        return $this;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    public function getAlias(): string
-    {
-        return $this->alias;
-    }
-
-    public function setAlias(string $alias): static
-    {
-        $this->alias = $alias;
-
-        return $this;
-    }
-
-    public function getSubtitle(): string
-    {
-        return $this->subtitle;
-    }
-
-    public function setSubtitle(string $subtitle): static
-    {
-        $this->subtitle = $subtitle;
-
-        return $this;
-    }
-
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getCover(): string
-    {
-        return $this->cover;
-    }
-
-    public function setCover(string $cover): static
-    {
-        $this->cover = $cover;
-
-        return $this;
-    }
-
-    public function getImages(): array
-    {
-        return $this->images;
-    }
-
-    public function setImages(array $images): static
-    {
-        $this->images = $images;
-
-        return $this;
-    }
-
-    public function getUrl(): string
-    {
-        return $this->url;
-    }
-
-    public function setUrl(string $url): static
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    public function getMeta(): array
-    {
-        return $this->meta;
-    }
-
-    public function setMeta(array $meta): static
-    {
-        $this->meta = $meta;
-
-        return $this;
-    }
-
-    public function getCreated(): ?Chronos
-    {
-        return $this->created;
-    }
-
-    public function setCreated(\DateTimeInterface|string|null $created): static
-    {
-        $this->created = Chronos::wrapOrNull($created);
-
-        return $this;
-    }
-
-    public function getModified(): ?Chronos
-    {
-        return $this->modified;
-    }
-
-    public function setModified(\DateTimeInterface|string|null $modified): static
-    {
-        $this->modified = Chronos::wrapOrNull($modified);
-
-        return $this;
-    }
-
-    public function getCreatedBy(): int
-    {
-        return $this->createdBy;
-    }
-
-    public function setCreatedBy(int $createdBy): static
-    {
-        $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
-    public function getModifiedBy(): int
-    {
-        return $this->modifiedBy;
-    }
-
-    public function setModifiedBy(int $modifiedBy): static
-    {
-        $this->modifiedBy = $modifiedBy;
-
-        return $this;
-    }
-
-    public function getParams(): array
-    {
-        return $this->params;
-    }
-
-    public function setParams(array $params): static
-    {
-        $this->params = $params;
-
-        return $this;
-    }
-
-    public function getState(): BasicState
-    {
-        return $this->state;
-    }
-
-    public function setState(int|BasicState $state): static
-    {
-        $this->state = new BasicState($state);
-
-        return $this;
-    }
-
-    public function getOrdering(): int
-    {
-        return $this->ordering;
-    }
-
-    public function setOrdering(int $ordering): static
-    {
-        $this->ordering = $ordering;
-
-        return $this;
     }
 }
