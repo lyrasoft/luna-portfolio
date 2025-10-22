@@ -18,8 +18,8 @@ php windwalker pkg:install lyrasoft/portfolio -t routes -t lang -t migrations -t
 
 Seeders
 
-- Add `portfolio-seeder.php` to `resources/seeders/main.php`
-- Add `portfolio` type to `category-seeder.php`
+- Add `portfolio.seeder.php` to `resources/seeders/main.seeder.php`
+- Add `portfolio` type to `category.seeder.php`
 
 Languages
 
