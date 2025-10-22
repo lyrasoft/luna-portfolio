@@ -54,7 +54,7 @@ class PortfolioRepository implements ManageRepositoryInterface, ListRepositoryIn
     {
         $action->setReorderGroupHandler(
             function (Query $query, Portfolio $entity) {
-                $query->where('category_id', $entity->getCategoryId());
+                $query->where('category_id', $entity->categoryId);
             }
         );
     }

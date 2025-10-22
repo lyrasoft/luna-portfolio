@@ -102,14 +102,14 @@ $imagePlaceholder = $app->service(\Unicorn\Image\ImagePlaceholder::class);
                     ?>
                     <tr>
                         <td>
-                            <x-row-checkbox :row="$i" :id="$entity->getId()"></x-row-checkbox>
+                            <x-row-checkbox :row="$i" :id="$entity->id"></x-row-checkbox>
                         </td>
                         <td>
                             <x-state-dropdown color-on="text"
                                 button-style="width: 100%"
                                 use-states
                                 :workflow="$workflow"
-                                :id="$entity->getId()"
+                                :id="$entity->id"
                                 :value="$item->state"
                             />
                         </td>
@@ -118,7 +118,7 @@ $imagePlaceholder = $app->service(\Unicorn\Image\ImagePlaceholder::class);
                         </td>
                         <td>
                             <div>
-                                <a href="{{ $nav->to('portfolio_edit')->id($entity->getId()) }}">
+                                <a href="{{ $nav->to('portfolio_edit')->id($entity->id) }}">
                                     {{ $item->title }}
                                 </a>
                             </div>
@@ -127,20 +127,20 @@ $imagePlaceholder = $app->service(\Unicorn\Image\ImagePlaceholder::class);
                             <x-order-control
                                 :enabled="$vm->reorderEnabled($ordering)"
                                 :row="$i"
-                                :id="$entity->getId()"
+                                :id="$entity->id"
                                 :value="$item->ordering"
                             ></x-order-control>
                         </td>
                         <td class="text-center">
                             <button type="button" class="btn btn-sm btn-outline-secondary"
-                                @click="grid.deleteItem('{{ $entity->getId() }}')"
+                                @click="grid.deleteItem('{{ $entity->id }}')"
                                 data-dos
                             >
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </td>
                         <td class="text-right text-end">
-                            {{ $entity->getId() }}
+                            {{ $entity->id }}
                         </td>
                     </tr>
                 @endforeach
