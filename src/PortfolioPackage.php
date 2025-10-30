@@ -28,11 +28,6 @@ class PortfolioPackage extends AbstractPackage
         $installer->installRoutes(static::path('routes/**/*.php'), 'routes');
 
         // Modules
-        // Admin + Front + Model
         $installer->installMVCModules(Portfolio::class);
-        // Admin + Front, no model
-        $installer->installMVCModules(Portfolio::class, model: false);
-        // Only Admin + Model
-        $installer->installMVCModules(Portfolio::class, ['Admin'], true);
     }
 }
