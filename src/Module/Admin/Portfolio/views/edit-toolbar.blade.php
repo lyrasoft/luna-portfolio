@@ -22,6 +22,9 @@ use Windwalker\Core\Language\LangService;
 use Windwalker\Core\Router\Navigator;
 use Windwalker\Core\Router\SystemUri;
 
+/**
+ * @var $item \Lyrasoft\Portfolio\Entity\Portfolio
+ */
 ?>
 
 <div x-title="toolbar" x-data="{ form: $store.form }">
@@ -68,6 +71,16 @@ use Windwalker\Core\Router\SystemUri;
         <span class="fa fa-check"></span>
         @lang('unicorn.toolbar.save2close')
     </button>
+
+    @if ($item)
+        <a class="btn btn-outline-success btn-sm"
+            href="{{ $nav->to('front::portfolio_item')->id($item->id)->alias($item->alias) }}"
+            target="_blank"
+        >
+            <span class="fa fa-eye"></span>
+            @lang('unicorn.toolbar.preview')
+        </a>
+    @endif
 
     <a class="btn btn-default btn-outline-secondary btn-sm"
         href="{{ $nav->to('portfolio_list') }}">

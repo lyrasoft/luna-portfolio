@@ -17,6 +17,7 @@ use Lyrasoft\Luna\Entity\Category;
 use Lyrasoft\Luna\Repository\CategoryRepository;
 use Unicorn\Enum\BasicState;
 use Windwalker\Core\Application\AppContext;
+use Windwalker\Core\Attributes\ViewMetadata;
 use Windwalker\Core\Attributes\ViewModel;
 use Windwalker\Core\Html\HtmlFrame;
 use Windwalker\Core\Router\Exception\RouteNotFoundException;
@@ -70,10 +71,12 @@ class PortfolioItemView implements ViewModelInterface
             throw new RouteNotFoundException('Item not found.');
         }
 
-        /** @var Category $category */
-        $category = $this->categoryRepository->getItem($item->categoryId);
+        $view[$item::class] = $item;
 
-        if (!$category || $category->state === BasicState::UNPUBLISHED) {
+        /** @var Category $category */
+        $category = $this->categoryRepository->mustGetItem($item->categoryId);
+
+        if ($category->state === BasicState::UNPUBLISHED) {
             throw new RouteNotFoundException('Category not published.');
         }
 
@@ -82,27 +85,27 @@ class PortfolioItemView implements ViewModelInterface
             return $this->nav->self()->alias($item->alias);
         }
 
-        $this->prepareMetadata($view->getHtmlFrame(), $item);
-
         return compact(
             'item',
             'category'
         );
     }
 
-    protected function prepareMetadata(HtmlFrame $htmlFrame, Portfolio $item): void
+    #[ViewMetadata]
+    public function prepareMetadata(HtmlFrame $htmlFrame, Portfolio $item): void
     {
-        $meta = collect($item->meta);
+        $meta = $item->meta;
 
         $htmlFrame->setTitle($meta->title ?: $item->title);
-        $htmlFrame->setCoverImagesIfNotEmpty($item->cover);
-        $htmlFrame->setDescriptionIfNotEmpty(
-            $meta->description
-            ?: (string) str($item->description)->stripHtmlTags()->truncate(150, '...')
-        );
 
-        if ($meta->keyword) {
-            $htmlFrame->addMetadata('keyword', (string) $meta->keyword);
+        $htmlFrame->setCoverImagesIfNotEmpty($meta->cover);
+        $htmlFrame->setCoverImagesIfNotEmpty($item->cover);
+
+        $htmlFrame->setDescriptionIfNotEmpty($item->description, 200);
+        $htmlFrame->setDescriptionIfNotEmpty($meta->description);
+
+        if ($meta->keywords) {
+            $htmlFrame->addMetadata('keywords', (string) $meta->keywords);
         }
     }
 }

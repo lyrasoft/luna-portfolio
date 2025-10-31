@@ -11,14 +11,18 @@ declare(strict_types=1);
 
 namespace Lyrasoft\Portfolio\Module\Front\Portfolio;
 
+use Lyrasoft\Luna\Entity\Category;
+use Lyrasoft\Luna\Module\Front\Category\CategoryViewTrait;
 use Lyrasoft\Portfolio\Entity\Portfolio;
 use Lyrasoft\Portfolio\Repository\PortfolioRepository;
-use Lyrasoft\Luna\Module\Front\Category\CategoryViewTrait;
+use Unicorn\Selector\ListSelector;
 use Windwalker\Core\Application\AppContext;
+use Windwalker\Core\Attributes\ViewMetadata;
 use Windwalker\Core\Attributes\ViewModel;
+use Windwalker\Core\Html\HtmlFrame;
+use Windwalker\Core\Language\TranslatorTrait;
 use Windwalker\Core\View\View;
 use Windwalker\Core\View\ViewModelInterface;
-use Windwalker\Data\Collection;
 use Windwalker\DI\Attributes\Autowire;
 
 /**
@@ -31,6 +35,7 @@ use Windwalker\DI\Attributes\Autowire;
 class PortfolioListView implements ViewModelInterface
 {
     use CategoryViewTrait;
+    use TranslatorTrait;
 
     /**
      * Constructor.
@@ -45,7 +50,7 @@ class PortfolioListView implements ViewModelInterface
     /**
      * Prepare View.
      *
-     * @param  AppContext  $app   The web app context.
+     * @param  AppContext  $app  The web app context.
      * @param  View        $view  The view object.
      *
      * @return  mixed
@@ -53,7 +58,9 @@ class PortfolioListView implements ViewModelInterface
     public function prepare(AppContext $app, View $view): array
     {
         $path = $app->input('path');
-        $category = $this->getCategoryOrFail(['type' => 'portfolio', 'path' => $path]);
+        $category = $this->getCategory(['type' => 'portfolio', 'path' => $path]);
+
+        $view['category'] = $category;
 
         $limit = 10;
         $page = $app->input('page');
@@ -61,8 +68,13 @@ class PortfolioListView implements ViewModelInterface
         $items = $this->repository->getListSelector()
             ->addFilter('portfolio.state', 1)
             ->addFilter('category.state', 1)
-            ->where('category.lft', '>=', $category->lft)
-            ->where('category.rgt', '<=', $category->rgt)
+            ->tapIf(
+                (bool) $category,
+                function (ListSelector $selector) use ($category) {
+                    $selector->where('category.lft', '>=', $category->lft)
+                        ->where('category.rgt', '<=', $category->rgt);
+                }
+            )
             ->ordering('portfolio.created', 'DESC')
             ->page($page)
             ->limit($limit);
@@ -74,8 +86,17 @@ class PortfolioListView implements ViewModelInterface
         return compact('items', 'pagination');
     }
 
-    public function prepareItem(Collection $item): object
+    #[ViewMetadata]
+    public function prepareMetadata(HtmlFrame $htmlFrame, ?Category $category = null): void
     {
-        return $this->repository->getEntityMapper()->toEntity($item);
+        if ($category) {
+            $htmlFrame->setTitle(
+                $this->trans('portfolio.meta.list.title', category: $category->title)
+            );
+        } else {
+            $htmlFrame->setTitle(
+                $this->trans('portfolio.meta.list.title.root')
+            );
+        }
     }
 }

@@ -144,7 +144,7 @@ class EditForm implements FieldDefinitionInterface
                     ->label($this->trans('portfolio.field.seo.description'))
                     ->rows(7);
 
-                $form->add('meta/keyword', TextField::class)
+                $form->add('meta/keywords', TextField::class)
                     ->label($this->trans('portfolio.field.seo.keyword'));
             }
         );

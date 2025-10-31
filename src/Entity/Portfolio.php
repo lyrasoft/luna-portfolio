@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Lyrasoft\Portfolio\Entity;
 
+use Lyrasoft\Luna\Data\MetaData;
 use Windwalker\ORM\Attributes\AutoIncrement;
+use Windwalker\ORM\Attributes\Cast;
 use Windwalker\ORM\Attributes\Column;
 use Windwalker\ORM\Attributes\EntitySetup;
 use Windwalker\ORM\Attributes\PK;
@@ -62,7 +64,8 @@ class Portfolio implements EntityInterface
 
     #[Column('meta')]
     #[JsonObject]
-    public array $meta = [];
+    #[Cast(MetaData::class)]
+    public MetaData $meta;
 
     #[Column('state')]
     public BasicState $state {
