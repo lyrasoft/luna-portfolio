@@ -66,20 +66,20 @@ class PortfolioItemView implements ViewModelInterface
         /** @var Portfolio $item */
         $item = $this->repository->getItem($id);
 
-        if (!$item || $item->getState()->equals(BasicState::UNPUBLISHED())) {
+        if (!$item || $item->state === BasicState::UNPUBLISHED) {
             throw new RouteNotFoundException('Item not found.');
         }
 
         /** @var Category $category */
-        $category = $this->categoryRepository->getItem($item->getCategoryId());
+        $category = $this->categoryRepository->getItem($item->categoryId);
 
-        if (!$category || $category->getState()->equals(BasicState::UNPUBLISHED())) {
+        if (!$category || $category->state === BasicState::UNPUBLISHED) {
             throw new RouteNotFoundException('Category not published.');
         }
 
         // Keep URL unique
-        if ($item->getAlias() !== $alias) {
-            return $this->nav->self()->alias($item->getAlias());
+        if ($item->alias !== $alias) {
+            return $this->nav->self()->alias($item->alias);
         }
 
         $this->prepareMetadata($view->getHtmlFrame(), $item);
@@ -92,13 +92,13 @@ class PortfolioItemView implements ViewModelInterface
 
     protected function prepareMetadata(HtmlFrame $htmlFrame, Portfolio $item): void
     {
-        $meta = collect($item->getMeta());
+        $meta = collect($item->meta);
 
-        $htmlFrame->setTitle($meta->title ?: $item->getTitle());
-        $htmlFrame->setCoverImagesIfNotEmpty($item->getCover());
+        $htmlFrame->setTitle($meta->title ?: $item->title);
+        $htmlFrame->setCoverImagesIfNotEmpty($item->cover);
         $htmlFrame->setDescriptionIfNotEmpty(
             $meta->description
-            ?: (string) str($item->getDescription())->stripHtmlTags()->truncate(150, '...')
+            ?: (string) str($item->description)->stripHtmlTags()->truncate(150, '...')
         );
 
         if ($meta->keyword) {
