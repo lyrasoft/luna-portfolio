@@ -13,22 +13,27 @@ composer require lyrasoft/portfolio
 Then copy files to project
 
 ```shell
-php windwalker pkg:install lyrasoft/portfolio -t routes -t lang -t migrations -t seeders
+php windwalker pkg:install lyrasoft/portfolio -t routes -t migrations -t seeders
 ```
 
 Seeders
 
 - Add `portfolio.seeder.php` to `resources/seeders/main.seeder.php`
-- Add `portfolio` type to `category.seeder.php`
+- Package will auto add categories to seeders
+- If you want to modify categories, edit `seeders/categories/portfolio.categories.php`
 
-Languages
+### Languages
 
-If you don't want to copy language files, remove `-t lang` from install command.
-
-Then add this line to admin & front middleware:
+Add this line to admin & front middleware:
 
 ```php
-$this->lang->loadAllFromVendor('lyrasoft/portfolio', 'ini');
+$this->lang->loadAllFromVendor(\Lyrasoft\Portfolio\PortfolioPackage::class, 'ini');
+```
+
+If you want to copy language files, Run this command:
+
+```shell
+php windwalker pkg:install lyrasoft/portfolio -t lang
 ```
 
 ## Register Admin Menu
