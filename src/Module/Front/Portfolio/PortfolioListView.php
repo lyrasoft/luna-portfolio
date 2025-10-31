@@ -61,8 +61,8 @@ class PortfolioListView implements ViewModelInterface
         $items = $this->repository->getListSelector()
             ->addFilter('portfolio.state', 1)
             ->addFilter('category.state', 1)
-            ->where('category.lft', '>=', $category->getLft())
-            ->where('category.rgt', '<=', $category->getRgt())
+            ->where('category.lft', '>=', $category->lft)
+            ->where('category.rgt', '<=', $category->rgt)
             ->ordering('portfolio.created', 'DESC')
             ->page($page)
             ->limit($limit);
